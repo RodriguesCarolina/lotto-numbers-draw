@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Lotto Numbers Generator</title>
+</head>
+<body>
+<script src="js/app.js"></script>
+<div>
+    <button id="lotto6aus49">Lotto 6aus49</button>
+    <button id="eurojackpot">Eurojackpot</button>
+</div>
+
+<form id="numberForm" method="post" onsubmit="event.preventDefault(); submitNumbers();">
+    <input type="text" id="numberInput" min="1" max="6" placeholder="Enter numbers separated by commas">
+    <button type="submit" id="submitButton"> Submit Numbers</button>
+</form>
+<div id="excludedNumbersDisplay"></div>
+<div id="generatedNumbersDisplay"></div>
+
+<div id="generateLottoNumbes">
+    <button id="generate-numbers">Generate My Lucky Numbers</button>
+</div>
+</body>
+</html>
