@@ -1,14 +1,18 @@
 <?php
 
-header('Content-Type: application/json; charset=utf-8');
+$unluckyNumbers = [];
 
-$jsonFile = 'src/unluckyNumbers.json';
+if ($handle = fopen('src/unluckyNumbers.txt', 'r')) {
+    $fileContent = '';
 
-if (file_exists($jsonFile)) {
-    $unluckyNumbers = json_decode(file_get_contents($jsonFile), true);
-    echo json_encode(['unluckyNumbers' => $unluckyNumbers]);
-} else {
-    // If the file doesn't exist or there was an error reading it
-    echo json_encode(['error' => 'Could not retrieve numbers']);
+    while (($line = fgets($handle)) !== false) {
+        $fileContent .= $line;
+    }
+
+    fclose($handle); //close the file handle. fclose and not closedir.
+
+    $unluckyNumbers = explode(',', $fileContent);
 }
 
+header('Content-Type: application/json; charset=utf-8'); //sets the content type to json.
+print json_encode($unluckyNumbers); // converts unlucky numbers into a JSON String.
