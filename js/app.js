@@ -89,7 +89,6 @@ function submitNumbers() {
     let numbers = input.split(',').map(function(item) {
         return parseInt(item, 10);
     });
-    console.log('hallo');
     saveUnluckyNumbers(numbers);
 }
 
