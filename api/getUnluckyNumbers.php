@@ -2,7 +2,7 @@
 
 $unluckyNumbers = [];
 
-if ($handle = fopen('src/unluckyNumbers.txt', 'r')) {
+if ($handle = fopen('src/unluckyNumbers.json', 'r')) {
     $fileContent = '';
 
     while (($line = fgets($handle)) !== false) {

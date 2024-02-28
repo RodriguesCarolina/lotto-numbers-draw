@@ -52,12 +52,44 @@ async function getUnluckyNumbers() {
 getUnluckyNumbers().then(() => {
     console.log(globalUnluckyNumbers); // This will log after the numbers have been fetched
 })
+
+/*function updateUnluckyNumbers() {
+    const unluckyNumbersList = document.getElementById('excludedNumbersDisplay');
+    unluckyNumbersList.innerHTML = globalUnluckyNumbers.map(n =>
+        `<span class="unlucky-number">${n} 
+        <button onclick="removeNumber(${n})">X</button> 
+        </span>`).join('');
+
+    document.getElementById('numberInput').disabled = globalUnluckyNumbers >= 6;
+}*/
+
+/*function checkInputAndAddNumbers() {
+    const userInput = document.getElementById('numberInput');
+    let numberInput = parseInt(userInput.value.trim());
+
+    if (!isNaN(numberInput) &&
+        numberInput >= 1 &&
+        numberInput <= 49 &&
+        !globalUnluckyNumbers.includes(numberInput)) {
+
+        if (globalUnluckyNumbers.length > 6) {
+            globalUnluckyNumbers.push(numberInput);
+            saveUnluckyNumbers(globalUnluckyNumbers);
+        } else {
+            console.error('Maximum number of unlucky numbers reached.');
+        }
+    } else {
+        console.error('Invalid input or number already in the list');
+    }
+    userInput.
+}*/
+
 function submitNumbers() {
     let input = document.getElementById('numberInput').value;
     let numbers = input.split(',').map(function(item) {
         return parseInt(item, 10);
     });
-    //console.log(numbers);
+    console.log('hallo');
     saveUnluckyNumbers(numbers);
 }
 

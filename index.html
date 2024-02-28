@@ -22,11 +22,11 @@
 
 
     <form id="numberForm" class="d-flex align-items-center justify-content-center my-3" method="post" onsubmit="event.preventDefault(); submitNumbers();">
-        <input type="text" id="numberInput" min="1" max="6" placeholder="Enter numbers separated by commas" onkeyup="checkInput()">
+        <input type="text" id="numberInput" min="1" max="6" placeholder="Enter numbers separated by commas">
     </form>
 
     <div class="d-flex justify-content-center">
-        <button type="submit" id="submitButton" class="btn btn-primary my-3"> Submit Unlucky Numbers</button>
+        <button type="submit" id="submitButton" class="btn btn-primary my-3" onclick="submitNumbers()"> Submit Unlucky Numbers</button>
     </div>
 
     <div id="excludedNumbersDisplay"></div>
