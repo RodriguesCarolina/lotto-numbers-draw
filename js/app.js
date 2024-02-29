@@ -24,7 +24,7 @@ function saveUnluckyNumbers(numbers) {
 }
 
 //refactor this.
-function checkInput() {
+/*function checkInput() {
     const input = document.getElementById('numberInput');
     const list = document.getElementById('excludedNumbersDisplay');
     const maxNumbers = 6;
@@ -34,55 +34,72 @@ function checkInput() {
     list.innerHTML = numbers.map(n => `<span class="unlucky-number">${n} <button onclick="removeNumber(${n})">X</button></span>`).join('');
 
     input.disabled = numbers.length >= maxNumbers;
-}
+}*/
 
 let globalUnluckyNumbers = [];
 
 async function getUnluckyNumbers() {
     try {
         const response = await fetch('api/getUnluckyNumbers.php');
-         // data is the array of numbers
-        globalUnluckyNumbers = await response.json(); // Set the global unlucky numbers to the data received
-        console.log('Unlucky numbers fetched:', globalUnluckyNumbers);
+        if (response.ok) {
+            const data = await response.json(); // Make sure this returns an array
+            // Check if the received data is an array
+            if (Array.isArray(data.unluckyNumbers)) {
+                globalUnluckyNumbers = data.unluckyNumbers;
+            } else {
+                // If not, handle the situation appropriately,  set it to an empty array
+                globalUnluckyNumbers = [];
+            }
+        } else {
+            // Handle HTTP error
+            console.error('HTTP error:', response.status);
+        }
     } catch (error) {
         console.error('Error fetching unlucky numbers:', error);
     }
+    updateUnluckyNumbersDisplay(); // Update the display after fetching the numbers
+}
+getUnluckyNumbers().then(() => {
+    console.log('Unlucky numbers fetched:', globalUnluckyNumbers);
+    // Now this will log after the numbers have been fetched and confirmed to be an array
+});
+function checkInputAndAddNumbers() {
+    const userInput = document.getElementById('numberInput');
+    let numberInput = userInput.value.split(',').map(n => parseInt(n.trim())).filter(n => !isNaN(n) && n >= 1 && (n <= 49 || n <= 50)); // Use correct upper limit for the lotto game
+
+    // Remove duplicates and filter out numbers that are already in globalUnluckyNumbers
+    numberInput = numberInput.filter((number, index, self) =>
+        self.indexOf(number) === index && !globalUnluckyNumbers.includes(number)
+    );
+
+    // Check if adding the new numbers exceeds the limit of 6
+    if (globalUnluckyNumbers.length + numberInput.length > 6) {
+        showAlert('Adding these numbers would exceed the maximum allowed unlucky numbers.', 'danger');
+        //console.error('Adding these numbers would exceed the maximum allowed unlucky numbers.');
+        //return; // Stop further execution
+    }
+
+    // Add valid numbers to the global list and update the display
+    globalUnluckyNumbers.push(...numberInput);
+    updateUnluckyNumbersDisplay();
+    userInput.value = ''; // Clear the input after adding numbers
 }
 
-getUnluckyNumbers().then(() => {
-    console.log(globalUnluckyNumbers); // This will log after the numbers have been fetched
-})
+function showAlert(message, type) {
+    const alertPlaceholder = document.getElementById('alertPlaceholder');
+    const alert = `<div class="alert alert-${type}" role="alert">
+        ${message}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>`;
+    alertPlaceholder.innerHTML = alert;
 
-/*function updateUnluckyNumbers() {
-    const unluckyNumbersList = document.getElementById('excludedNumbersDisplay');
-    unluckyNumbersList.innerHTML = globalUnluckyNumbers.map(n =>
-        `<span class="unlucky-number">${n} 
-        <button onclick="removeNumber(${n})">X</button> 
-        </span>`).join('');
-
-    document.getElementById('numberInput').disabled = globalUnluckyNumbers >= 6;
-}*/
-
-/*function checkInputAndAddNumbers() {
-    const userInput = document.getElementById('numberInput');
-    let numberInput = parseInt(userInput.value.trim());
-
-    if (!isNaN(numberInput) &&
-        numberInput >= 1 &&
-        numberInput <= 49 &&
-        !globalUnluckyNumbers.includes(numberInput)) {
-
-        if (globalUnluckyNumbers.length > 6) {
-            globalUnluckyNumbers.push(numberInput);
-            saveUnluckyNumbers(globalUnluckyNumbers);
-        } else {
-            console.error('Maximum number of unlucky numbers reached.');
-        }
-    } else {
-        console.error('Invalid input or number already in the list');
-    }
-    userInput.
-}*/
+    // If you want the alert to disappear after some time
+    setTimeout(() => {
+        alertPlaceholder.innerHTML = ''; // Clear the alert after 5 seconds
+    }, 5000);
+}
 
 function submitNumbers() {
     let input = document.getElementById('numberInput').value;
@@ -90,8 +107,26 @@ function submitNumbers() {
         return parseInt(item, 10);
     });
     saveUnluckyNumbers(numbers);
+    checkInputAndAddNumbers();
+}
+function updateUnluckyNumbersDisplay() {
+    const unluckyNumbersList = document.getElementById('excludedNumbersDisplay');
+    const counterDisplay = document.getElementById('unluckyNumbersCounter');
+
+    unluckyNumbersList.innerHTML = globalUnluckyNumbers.map(n =>
+        `<span class="unlucky-number">${n} 
+        <button onclick="removeNumber(${n})">X</button> 
+        </span>`).join('');
+
+    //document.getElementById('numberInput').disabled = globalUnluckyNumbers >= 6;
+    counterDisplay.textContent = `${globalUnluckyNumbers.length}/6 Unlucky Numbers Set`;
 }
 
+function removeNumber(numberToRemove) {
+    globalUnluckyNumbers = globalUnluckyNumbers.filter(n => n !== numberToRemove);
+    updateUnluckyNumbersDisplay();
+}
+updateUnluckyNumbersDisplay();
 function generateUniqueRandomNumbers(count, max, excludeNumbers) {
     let uniqueNumbers = [];
     while (uniqueNumbers.length < count) {
