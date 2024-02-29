@@ -1,0 +1,14 @@
+{
+  "maxNumbers": {
+    "Lotto6aus49": 49,
+    "EuroJackpot": 50
+  },
+  "numberCount": {
+    "Lotto6aus49": 6,
+    "EuroJackpot": 5
+  },
+  "superNumbersMax": {
+    "EuroJackpot": 10
+  },
+  "maxUnluckyNumbers": 6
+}

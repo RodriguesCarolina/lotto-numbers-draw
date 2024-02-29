@@ -1,23 +1,37 @@
 <?php
 
-$textFile = 'src/unluckyNumbers.txt';
+$jsonFile = 'src/unluckyNumbers.json';
 $inputJson = file_get_contents('php://input');
 $inputDataArray = json_decode($inputJson, true);
 
-if (!isset($inputDataArray['unluckyNumbers']) || !is_array($inputDataArray['unluckyNumbers'])) {
+if (!isset($inputDataArray['unluckyNumbers'])) {
     http_response_code(400);
-    print json_encode(['error' => 'Invalid input']);
+    echo json_encode(['error' => 'Invalid input']);
     exit();
 }
 
-$unluckyNumbersString = implode(',', $inputDataArray['unluckyNumbers']);
+$existingUnluckyNumbers = [];
 
-$result = file_put_contents($textFile, $unluckyNumbersString);
+if (file_exists($jsonFile)) {
+    $fileContent = file_get_contents($jsonFile);
+    $decodedContent = json_decode($fileContent, true);
 
-if ($result === false) {
+    if (isset($decodedContent['unluckyNumbers']) && is_array($decodedContent['unluckyNumbers'])) {
+        $existingUnluckyNumbers = $decodedContent['unluckyNumbers'];
+    }
+}
+
+//add new number and save them in the existent array.
+$mergedUnluckyNumbers = array_unique(array_merge($existingUnluckyNumbers, $inputDataArray['unluckyNumbers']));
+
+// Save this merged data in a variable
+$dataToSave = ['unluckyNumbers' => $mergedUnluckyNumbers];
+$mergedDataJson = file_put_contents($jsonFile, json_encode($dataToSave));
+
+if ($mergedDataJson === false) {
     http_response_code(500);
-    print json_encode(['error' => 'Failed to write data to the file']);
+    echo json_encode(['error' => 'Failed to write data to the file']);
     exit();
 }
 
-print json_encode(['success' => 'Numbers were saved']);
+echo json_encode(['success' => 'Unlucky numbers saved successfully']);

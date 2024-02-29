@@ -1,18 +1,22 @@
 <?php
 
-$unluckyNumbers = [];
+function getUnluckyNumbers() {
+    $filepath = 'src/unluckyNumbers.json';
 
-if ($handle = fopen('src/unluckyNumbers.txt', 'r')) {
-    $fileContent = '';
+    if (file_exists($filepath)) {
+        $fileContent = file_get_contents($filepath);
+        $unluckyNumbers = json_decode($fileContent, true);
 
-    while (($line = fgets($handle)) !== false) {
-        $fileContent .= $line;
+        if (!is_array($unluckyNumbers)) {
+            $unluckyNumbers = ['unluckyNumbers' => []]; //set the json standard format
+        }
+    } else {
+        $unluckyNumbers = ['unluckyNumbers' => []];
     }
 
-    fclose($handle); //close the file handle. fclose and not closedir.
-
-    $unluckyNumbers = explode(',', $fileContent);
+    return $unluckyNumbers;
 }
 
+$unluckyNumbersData = getUnluckyNumbers();
 header('Content-Type: application/json; charset=utf-8'); //sets the content type to json.
-print json_encode($unluckyNumbers); // converts unlucky numbers into a JSON String.
+print json_encode($unluckyNumbersData); // converts unlucky numbers into a JSON String.
