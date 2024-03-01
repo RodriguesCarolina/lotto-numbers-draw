@@ -20,11 +20,11 @@ export class UiHandler {
         const input = document.getElementById('numberInput');
         const numbers = input.value.split(',').map(Number).filter(n => !isNaN(n) && n > 0);
 
-            await this.lottoService.saveUnluckyNumbers(numbers);
-            console.log('Unlucky numbers saved successfully');
-            input.value = '';
-            //await this.fetchAndDisplayExcludedNumbers();
         await this.checkInputAndAddNumbers();
+        await this.lottoService.saveUnluckyNumbers(numbers);
+
+        console.log('Unlucky numbers saved successfully');
+        input.value = '';
     }
 
     async generateAndDisplayLottoNumbers() {

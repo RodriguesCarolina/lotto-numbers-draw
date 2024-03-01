@@ -100,16 +100,30 @@ export class LottoService {
     }
 
     async saveUnluckyNumbers(numbers) {
+        // First, check if the current count of excluded numbers plus the new numbers exceed 6
+        const currentCount = this.excludedLottoNumbers.length;
+        const newNumbersCount = numbers.length;
+        const totalCount = currentCount + newNumbersCount;
+
+        if (totalCount > 6) {
+            console.error('Cannot save more than 6 unlucky numbers. Please remove some numbers first.');
+        }
+
         try {
             const result = await apiService.saveUnluckyNumbers(numbers);
-            console.log('Unlucky numbers saved:', result);
-            // Possibly update the local state of excluded numbers after saving
-            this.excludedLottoNumbers = await apiService.fetchExcludedLottoNumbers();
+            if (result && result.success) {
+                console.log('Unlucky numbers saved:', result);
+                // Update the local state of excluded numbers after saving
+                this.excludedLottoNumbers = await apiService.fetchExcludedLottoNumbers();
+            } else if (result && result.error) {
+                console.error('Failed to save unlucky numbers:', result.error);
+            }
         } catch (error) {
             console.error('Failed to save unlucky numbers:', error);
             throw error;
         }
     }
+
 }
 
 export default LottoService;
