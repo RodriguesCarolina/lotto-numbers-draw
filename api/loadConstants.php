@@ -1,6 +1,6 @@
 <?php
 
-$lottoConstantsFile = 'src/constants.json';
+$lottoConstantsFile = '../data/constants.json';
 
 header('Content-Type: application/json');
 

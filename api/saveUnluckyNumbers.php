@@ -1,6 +1,6 @@
 <?php
 
-$jsonFile = 'src/unluckyNumbers.json';
+$jsonFile = '../data/unluckyNumbers.json';
 $inputJson = file_get_contents('php://input');
 $inputDataArray = json_decode($inputJson, true);
 
