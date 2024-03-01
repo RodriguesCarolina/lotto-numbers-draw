@@ -45,6 +45,20 @@ export class LottoService {
         }
     }
 
+    async removeNumber(numberToRemove) {
+        try {
+            // Call the API service to remove the number
+            await apiService.removeUnluckyNumber(numberToRemove);
+            this.excludedLottoNumbers = this.excludedLottoNumbers.filter(n => n !== numberToRemove);
+
+            //refresh the list of excluded numbers from the server
+            this.excludedLottoNumbers = await apiService.fetchExcludedLottoNumbers();
+        } catch (error) {
+            console.error('Failed to remove unlucky number:', error);
+            throw error;
+        }
+    }
+
     generateUniqueRandomNumbers(count, max, excludeNumbers) {
         if (max - excludeNumbers.length < count) {
             console.error("Anforderung nicht erfüllbar: Nicht genügend Zahlen verfügbar, um die Anfrage zu erfüllen.");

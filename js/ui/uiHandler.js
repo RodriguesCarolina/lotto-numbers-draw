@@ -50,10 +50,19 @@ export class UiHandler {
 
         const excludedNumbers = this.lottoService.getExcludedLottoNumbers();
 
-        unluckyNumbersList.innerHTML = excludedNumbers.map(n =>
-            `<span class="unlucky-number">${n} 
-            <button onclick="this.removeNumber(${n})">X</button> 
-            </span>`).join('');
+        unluckyNumbersList.innerHTML = ''; // Clear existing content
+        excludedNumbers.forEach(n => {
+            const span = document.createElement('span');
+            span.className = 'unlucky-number';
+            span.textContent = `${n} `;
+
+            const button = document.createElement('button');
+            button.textContent = 'X';
+            button.addEventListener('click', () => this.removeNumber(n));
+
+            span.appendChild(button);
+            unluckyNumbersList.appendChild(span);
+        });
 
         counterDisplay.textContent = `${excludedNumbers.length}/6 Unlucky Numbers Set`;
 
@@ -87,9 +96,15 @@ export class UiHandler {
 
         userInput.value = ''; // Clear the input field
     }
-    removeNumber(numberToRemove) {
-        this.lottoService.removeNumber(numberToRemove);
-        this.updateUnluckyNumbersDisplay();
+    async removeNumber(numberToRemove) {
+        try {
+            await this.lottoService.removeNumber(numberToRemove);
+            // Refresh the display of unlucky numbers
+            await this.updateUnluckyNumbersDisplay();
+        } catch (error) {
+            console.error('Error removing number:', error);
+            // Optionally, display an error message to the user
+        }
     }
 }
 
