@@ -2,18 +2,19 @@ import { LottoService } from './services/lottoService.js';
 import { UiHandler } from './ui/uiHandler.js';
 import * as apiService from './services/apiService.js';
 
-const lottoService = new LottoService(apiService);
+async function initializeApplication() {
+    const lottoService = new LottoService(apiService);
+    const uiHandler = new UiHandler(lottoService);
 
-// Pass the LottoService instance to UiHandler for UI-related operations
-const uiHandler = new UiHandler(lottoService);
-
-document.addEventListener('DOMContentLoaded', async () => {
     try {
-        // Initialize necessary data and UI components
-        await lottoService.loadConstantsAndExcludedNumbers(); // Load constants and excluded numbers
-        uiHandler.init(); // Setup UI interactions
+        await lottoService.initializeService(); // Consolidated initialization in LottoService
+        await uiHandler.init(); // Initialize UI interactions
+        console.log('Application initialized successfully.');
     } catch (error) {
         console.error('Initialization error:', error);
-        // Optionally handle initialization errors, e.g., show an error message to the user
+
+        uiHandler.showAlert('An error occurred during application initialization. Please try again later.', 'danger');
     }
-});
+}
+
+document.addEventListener('DOMContentLoaded', initializeApplication);

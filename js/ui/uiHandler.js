@@ -6,9 +6,9 @@ export class UiHandler {
     }
 
     async init() {
-        await this.lottoService.loadConstantsAndExcludedNumbers();
+        await this.lottoService.initializeService();
+        await this.updateUnluckyNumbersDisplay();
         this.attachEventListeners();
-        //this.updateUnluckyNumbersDisplay();
     }
 
     attachEventListeners() {
@@ -19,12 +19,15 @@ export class UiHandler {
     async submitUnluckyNumbers() {
         const input = document.getElementById('numberInput');
         const numbers = input.value.split(',').map(Number).filter(n => !isNaN(n) && n > 0);
-
-        await this.checkInputAndAddNumbers();
-        await this.lottoService.saveUnluckyNumbers(numbers);
-
-        console.log('Unlucky numbers saved successfully');
-        input.value = '';
+        try {
+            await this.lottoService.addNumbers(numbers);
+            console.log('Unlucky numbers updated successfully');
+        } catch (error){
+            this.showAlert(error.message, 'danger');
+        } finally {
+            input.value = '';
+            await this.updateUnluckyNumbersDisplay();
+        }
     }
 
     async generateAndDisplayLottoNumbers() {
@@ -81,21 +84,7 @@ export class UiHandler {
             alertPlaceHolder.innerHTML = '';
         }, 10000);
     }
-    async checkInputAndAddNumbers() {
-        const userInput = document.getElementById('numberInput');
-        const numberInput = userInput.value.split(',')
-            .map(n => parseInt(n.trim()))
-            .filter(n => !isNaN(n) && n > 0);
 
-        try {
-            await this.lottoService.addNumbers(numberInput);
-            await this.updateUnluckyNumbersDisplay(); // Make sure this method is implemented to update the UI
-        } catch (error) {
-            this.showAlert(error.message, 'danger'); // Make sure showAlert is implemented
-        }
-
-        userInput.value = ''; // Clear the input field
-    }
     async removeNumber(numberToRemove) {
         try {
             await this.lottoService.removeNumber(numberToRemove);
@@ -109,9 +98,8 @@ export class UiHandler {
 }
 
 document.addEventListener('DOMContentLoaded', async () => {
-    const apiService = {}; // Import or define your API service here
-    const lottoService = new LottoService(apiService);
-    await lottoService.loadConstantsAndExcludedNumbers();
+    const lottoService = new LottoService();
+    await lottoService.initializeService();
     const uiHandler = new UiHandler(lottoService);
     await uiHandler.init();
 });
