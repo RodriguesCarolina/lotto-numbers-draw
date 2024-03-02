@@ -35,6 +35,10 @@ export class LottoService {
         const validNumbers = this.validateNewNumbers(newNumbers);
         if (validNumbers.length === 0) return;
 
+        if (this.excludedLottoNumbers.length + validNumbers.length > 6) {
+            throw new Error('You cannot add more than 6 unlucky numbers.');
+        }
+        // If the total doesn't exceed 6, proceed to update and save
         const updatedList = [...this.excludedLottoNumbers, ...validNumbers].slice(0, 6);
         await this.saveUnluckyNumbers(updatedList);
     }

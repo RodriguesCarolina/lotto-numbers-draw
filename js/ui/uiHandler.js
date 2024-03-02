@@ -22,11 +22,10 @@ export class UiHandler {
         try {
             await this.lottoService.addNumbers(numbers);
             console.log('Unlucky numbers updated successfully');
-        } catch (error){
-            this.showAlert(error.message, 'danger');
-        } finally {
             input.value = '';
             await this.updateUnluckyNumbersDisplay();
+        } catch (error) {
+            this.showAlert(error.message, 'danger');
         }
     }
 
@@ -72,18 +71,19 @@ export class UiHandler {
     }
 
     showAlert(message, type) {
-        const alertPlaceHolder = document.getElementById('alertPlaceholder');
-        alertPlaceHolder.innerHTML = `<div class="alert alert-${type}" role="alert">
-                         ${message}
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>`;
+        console.log(`Showing alert: ${message}, type: ${type}`); // Debugging line
+        const alertPlaceholder = document.getElementById('alertPlaceholder');
+        if (!alertPlaceholder) {
+            console.error("alertPlaceholder not found in the document.");
+            return;
+        }
+        alertPlaceholder.innerHTML = `<div class="alert alert-${type}" role="alert">${message}<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>`;
 
         setTimeout(() => {
-            alertPlaceHolder.innerHTML = '';
-        }, 10000);
+            alertPlaceholder.innerHTML = '';
+        }, 5000); // Reduced to 5 seconds for quicker feedback
     }
+
 
     async removeNumber(numberToRemove) {
         try {
