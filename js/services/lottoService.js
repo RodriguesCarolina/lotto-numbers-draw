@@ -32,11 +32,14 @@ export class LottoService {
         }
     }
     async addNumbers(newNumbers) {
-        const validNumbers = this.validateNewNumbers(newNumbers);
-        if (validNumbers.length === 0) return;
+        const { validNumbers, errors } = this.validateNewNumbers(newNumbers);
+
+        if (errors.length > 0) {
+            throw new Error(errors.join(' ')); // Combine all error messages.
+        }
 
         if (this.excludedLottoNumbers.length + validNumbers.length > 6) {
-            throw new Error('You cannot add more than 6 unlucky numbers.');
+            throw new Error('Adding these numbers would exceed the maximum of 6 unlucky numbers.');
         }
         // If the total doesn't exceed 6, proceed to update and save
         const updatedList = [...this.excludedLottoNumbers, ...validNumbers].slice(0, 6);
@@ -44,12 +47,22 @@ export class LottoService {
     }
 
     validateNewNumbers(newNumbers) {
-        return newNumbers.filter(number =>
-            !isNaN(number) &&
-            number >= 1 &&
-            (number <= 49 || number <= 50) &&
-            !this.excludedLottoNumbers.includes(number)
-        );
+        let errors = [];
+        let validNumbers = [];
+
+        newNumbers.forEach(number => {
+            if (isNaN(number)) {
+                errors.push(`"${number}" is not a valid number.`);
+            } else if (number <= 0 || number > 50) {
+                errors.push(`"${number}" is out of valid range (1-50).`);
+            } else if (this.excludedLottoNumbers.includes(number)) {
+                errors.push(`"${number}" is already in your list of unlucky numbers.`);
+            } else {
+                validNumbers.push(number);
+            }
+        });
+
+        return { validNumbers, errors };
     }
 
     generateUniqueRandomNumbers(count, max, excludeNumbers) {
@@ -104,11 +117,15 @@ export class LottoService {
     async removeNumber(numberToRemove) {
         try {
             // Call the API service to remove the number
-            await apiService.removeUnluckyNumber(numberToRemove);
-            this.excludedLottoNumbers = this.excludedLottoNumbers.filter(n => n !== numberToRemove);
-
-            //refresh the list of excluded numbers from the server
-            this.excludedLottoNumbers = await apiService.fetchExcludedLottoNumbers();
+            let result = await apiService.removeUnluckyNumber(numberToRemove);
+            if (result.success) {
+                //re-index to prevent wholes in array when removing the numbers:
+                this.excludedLottoNumbers = this.excludedLottoNumbers.filter(n => n !== numberToRemove);
+                this.excludedLottoNumbers = [...this.excludedLottoNumbers]; // This re-indexes the array
+                console.log('Number removed successfully:', numberToRemove);
+            } else {
+                console.error('Failed to remove unlucky number:', result.error);
+            }
         } catch (error) {
             console.error('Failed to remove unlucky number:', error);
             throw error;

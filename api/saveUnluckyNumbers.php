@@ -24,8 +24,11 @@ if (file_exists($jsonFile)) {
 // Add new numbers and ensure that it does not exceed 6.
 $allNumbers = array_merge($existingUnluckyNumbers, $inputDataArray['unluckyNumbers']);
 $uniqueNumbers = array_unique($allNumbers);
-// If the total = 6, keep only the first 6:
 
+//Re-index the key to make sure it will be saved as a JSON array
+$uniqueNumbers = array_values($uniqueNumbers);
+
+// If the total = 6, keep only the first 6:
 if (count($uniqueNumbers) > 6) {
     $uniqueNumbers = array_slice($uniqueNumbers, 0, 6);
 }
@@ -42,16 +45,4 @@ if ($success === false) {
 
 print json_encode(['success' => 'Unlucky numbers saved successfully']);
 
-/*//add new number and save them in the existent array.
-$mergedUnluckyNumbers = array_unique(array_merge($existingUnluckyNumbers, $inputDataArray['unluckyNumbers']));
-
-// Save this merged data in a variable
-
-$mergedDataJson = file_put_contents($jsonFile, json_encode($dataToSave));
-
-if ($mergedDataJson === false) {
-    http_response_code(500);
-    echo json_encode(['error' => 'Failed to write data to the file']);
-    exit();
-}*/
 

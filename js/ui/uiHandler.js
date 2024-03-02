@@ -18,57 +18,92 @@ export class UiHandler {
 
     async submitUnluckyNumbers() {
         const input = document.getElementById('numberInput');
-        const numbers = input.value.split(',').map(Number).filter(n => !isNaN(n) && n > 0);
+        const numbers = input.value.split(',').map(Number).filter(n => !isNaN(n) && n >= 0);
+
         try {
             await this.lottoService.addNumbers(numbers);
             console.log('Unlucky numbers updated successfully');
+            this.showAlert('Unlucky numbers updated successfully.', 'success');
+        } catch (error) {
+            this.showAlert(error.message, 'danger'); // This will show specific error(s)
+        } finally {
             input.value = '';
             await this.updateUnluckyNumbersDisplay();
-        } catch (error) {
-            this.showAlert(error.message, 'danger');
         }
     }
+
 
     async generateAndDisplayLottoNumbers() {
         const lottoType = document.querySelector('[name="lottoType"]:checked').value;
         try {
             const { numbers, superNumbers } = await this.lottoService.generateLottoNumbers(lottoType);
 
-            document.getElementById('generatedNumbersDisplay').innerText = `Lucky Numbers: ${numbers.join(', ')}`;
-            //console.log('Generated numbers are: ' + numbers);
-            //console.log('Generated super numbers are: ' + superNumbers);
+            // Clear previous numbers
+            const generatedNumbersDisplay = document.getElementById('generatedNumbersDisplay');
+            generatedNumbersDisplay.innerHTML = '';
+
+            // Create a container for lucky numbers
+            const luckyNumbersContainer = document.createElement('div');
+            luckyNumbersContainer.className = 'd-flex align-items-center justify-content-center';
+
+            // Iterate over the numbers and create a circle for each
+            numbers.forEach(number => {
+                const numberCircle = document.createElement('div');
+                numberCircle.className = 'number-circle';
+                numberCircle.textContent = number;
+                luckyNumbersContainer.appendChild(numberCircle);
+            });
+
+            // Append the container to the main display
+            generatedNumbersDisplay.appendChild(luckyNumbersContainer);
+
+            const superNumbersDisplay = document.getElementById('superNumbersDisplay');
+            superNumbersDisplay.innerHTML = '';
 
             if (superNumbers && superNumbers.length) {
-                document.getElementById('superNumbersDisplay').innerText = `Super Numbers: ${superNumbers.join(', ')}`;
+                superNumbers.forEach(number => {
+                    const superNumberCircle = document.createElement('div');
+                    superNumberCircle.className = 'number-circle super-number';
+                    superNumberCircle.textContent = number;
+                    document.getElementById('superNumbersDisplay').appendChild(superNumberCircle);
+                });
             }
         } catch (error) {
             console.error('Error in generating and displaying lotto numbers:', error);
         }
     }
 
+
     async updateUnluckyNumbersDisplay() {
         const unluckyNumbersList = document.getElementById('excludedNumbersDisplay');
-        const counterDisplay = document.getElementById('unluckyNumbersCounter');
+        unluckyNumbersList.innerHTML = ''; // Clear existing content
 
         const excludedNumbers = this.lottoService.getExcludedLottoNumbers();
 
-        unluckyNumbersList.innerHTML = ''; // Clear existing content
+        // Iterate over each number and create a circle and button for it
         excludedNumbers.forEach(n => {
-            const span = document.createElement('span');
-            span.className = 'unlucky-number';
-            span.textContent = `${n} `;
+            const numberCircle = document.createElement('div');
+            numberCircle.className = 'number-circle';
+            numberCircle.textContent = n;
 
-            const button = document.createElement('button');
-            button.textContent = 'X';
-            button.addEventListener('click', () => this.removeNumber(n));
+            const removeButton = document.createElement('button');
+            removeButton.textContent = 'X';
+            removeButton.className = 'remove-number-btn';
+            removeButton.onclick = () => this.removeNumber(n);
 
-            span.appendChild(button);
-            unluckyNumbersList.appendChild(span);
+            const numberContainer = document.createElement('div');
+            numberContainer.className = 'number-container';
+            numberContainer.appendChild(numberCircle);
+            numberContainer.appendChild(removeButton);
+
+            unluckyNumbersList.appendChild(numberContainer);
         });
 
+        // Update the counter display
+        const counterDisplay = document.getElementById('unluckyNumbersCounter');
         counterDisplay.textContent = `${excludedNumbers.length}/6 Unlucky Numbers Set`;
-
     }
+
 
     showAlert(message, type) {
         console.log(`Showing alert: ${message}, type: ${type}`); // Debugging line
