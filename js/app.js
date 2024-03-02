@@ -7,7 +7,7 @@ async function initializeApplication() {
     const uiHandler = new UiHandler(lottoService);
 
     try {
-        await lottoService.initializeService(); // Consolidated initialization in LottoService
+        await lottoService.initializeService(); // initialization in LottoService
         await uiHandler.init(); // Initialize UI interactions
         console.log('Application initialized successfully.');
     } catch (error) {

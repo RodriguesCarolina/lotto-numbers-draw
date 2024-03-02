@@ -18,19 +18,22 @@ export class UiHandler {
 
     async submitUnluckyNumbers() {
         const input = document.getElementById('numberInput');
-        const numbers = input.value.split(',').map(Number).filter(n => !isNaN(n) && n >= 0);
+        const numbers = input.value.split(',')
+            .map(n => parseInt(n.trim(), 10))
+            .filter(n => !isNaN(n) && n > 0);
 
         try {
+            console.log('Attempting to add numbers:', numbers);
             await this.lottoService.addNumbers(numbers);
-            console.log('Unlucky numbers updated successfully');
-            this.showAlert('Unlucky numbers updated successfully.', 'success');
         } catch (error) {
-            this.showAlert(error.message, 'danger'); // This will show specific error(s)
+            console.error('Error caught in submitUnluckyNumbers:', error);
+            this.showAlert(error.message, 'danger');
         } finally {
             input.value = '';
             await this.updateUnluckyNumbersDisplay();
         }
     }
+
 
 
     async generateAndDisplayLottoNumbers() {
@@ -116,7 +119,7 @@ export class UiHandler {
 
         setTimeout(() => {
             alertPlaceholder.innerHTML = '';
-        }, 5000); // Reduced to 5 seconds for quicker feedback
+        }, 5000);
     }
 
 
