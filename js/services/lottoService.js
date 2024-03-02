@@ -51,6 +51,7 @@ export class LottoService {
         let validNumbers = [];
 
         newNumbers.forEach(number => {
+            number = Number(number); // Make sure it's a number type for further checks.
             if (isNaN(number)) {
                 errors.push(`"${number}" is not a valid number.`);
             } else if (number <= 0 || number > 50) {

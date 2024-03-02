@@ -18,8 +18,9 @@ export class UiHandler {
 
     async submitUnluckyNumbers() {
         const input = document.getElementById('numberInput');
-        const numbers = input.value.split(',').map(Number).filter(n => !isNaN(n) && n >= 0);
-
+        const numbers = input.value.split(',')
+            .map(n => parseInt(n.trim(), 10)) // parse numbers as integers
+            .filter(n => !isNaN(n) && n > 0);
         try {
             await this.lottoService.addNumbers(numbers);
             console.log('Unlucky numbers updated successfully');
