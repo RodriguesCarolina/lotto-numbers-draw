@@ -1,7 +1,7 @@
 <?php
 
 function getUnluckyNumbers() {
-    $filepath = 'src/unluckyNumbers.json';
+    $filepath = '../data/unluckyNumbers.json';
 
     if (file_exists($filepath)) {
         $fileContent = file_get_contents($filepath);
