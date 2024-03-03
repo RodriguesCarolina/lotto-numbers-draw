@@ -29,14 +29,14 @@ Here’s how to set it up on Mac, Windows, and Linux:
 #### Step 1: Install XAMPP
 
 - **Windows and Linux:**
-    1. Go to the [Apache Friends website](https://www.apachefriends.org/index.html) and download the XAMPP installer for your operating system.
-    2. Open the downloaded file and follow the installation instructions. Default settings should be fine for most users.
-    3. Once installed, open XAMPP Control Panel. You might need to search for it in your applications menu.
+1. Go to the [Apache Friends website](https://www.apachefriends.org/index.html) and download the XAMPP installer for your operating system.
+2. Open the downloaded file and follow the installation instructions. Default settings should be fine for most users.
+3. Once installed, open XAMPP Control Panel. You might need to search for it in your applications menu.
 
 - **Mac:**
-    1. Visit the [Apache Friends website](https://www.apachefriends.org/index.html) to download XAMPP for Mac.
-    2. Open the downloaded file (a DMG file) and follow the instructions to drag XAMPP into your Applications folder.
-    3. Launch XAMPP from your Applications folder. It may prompt you to allow permissions the first time you run it.
+1. Visit the [Apache Friends website](https://www.apachefriends.org/index.html) to download XAMPP for Mac.
+2. Open the downloaded file (a DMG file) and follow the instructions to drag XAMPP into your Applications folder.
+3. Launch XAMPP from your Applications folder. It may prompt you to allow permissions the first time you run it.
 
 #### Step 2: Start the Apache Server
 
