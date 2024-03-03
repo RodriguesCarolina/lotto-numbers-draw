@@ -11,17 +11,17 @@
 
 <div class="container py-5">
     <div class="lotto-container py-5">
-        <h1 class="mb-4 display-4 text-center text-primary mb-4">Lotto Numbers Generator</h1>
+        <h1 class="mb-4 text-center mb-4 h3">Lotto Numbers Generator</h1>
 
         <!-- Lotto Type Selector -->
         <div class="row justify-content-center mb-3">
             <div class="col-md-6 text-center">
                 <div class="btn-group" role="group" aria-label="Lotto Type">
                     <input type="radio" class="btn-check" name="lottoType" id="lotto6aus49" value="Lotto6aus49" autocomplete="off" checked>
-                    <label class="btn btn-outline-primary" for="lotto6aus49">LOTTO 6aus49</label>
+                    <label class="btn custom-btn-outline-primary" for="lotto6aus49">LOTTO 6aus49</label>
 
                     <input type="radio" class="btn-check" name="lottoType" id="eurojackpot" value="EuroJackpot" autocomplete="off">
-                    <label class="btn btn-outline-primary" for="eurojackpot">Eurojackpot</label>
+                    <label class="btn custom-btn-outline-primary" for="eurojackpot">Eurojackpot</label>
                 </div>
             </div>
         </div>
@@ -31,7 +31,7 @@
             <div class="col-9">
                 <div class="input-group mb-3">
                     <input type="text" class="form-control" id="numberInput" placeholder="Enter numbers" aria-label="Unlucky numbers" aria-describedby="submitButton">
-                    <button class="btn btn-success" type="button" id="submitButton">Submit Unlucky Numbers</button>
+                    <button class="btn btn-soft-yellow" type="button" id="submitButton">Submit Unlucky Numbers</button>
                 </div>
             </div>
         </div>
@@ -42,7 +42,7 @@
         <!-- Display for Excluded Unlucky Numbers -->
         <div class="mb-3">
             <h2 class="h5 text-center">Excluded Unlucky Numbers</h2>
-            <div id="excludedNumbersDisplay" class="d-flex justify-content-center flex-wrap"></div>
+            <div id="excludedNumbersDisplay" class="d-flex justify-content-center flex-wrap mt-3"></div>
             <p id="unluckyNumbersCounter" class="text-center"></p>
         </div>
 

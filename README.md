@@ -90,6 +90,7 @@ This web application allows users to generate random lotto numbers while excludi
 
    ![Enter Unlucky Numbers](images/enter-unlucky-numbers.png)
 
+
 4. **Viewing Excluded Numbers**: Once submitted, the excluded numbers will be displayed below the input field. Each number will have an "X" button next to it, allowing you to remove it from the list of excluded numbers if desired.
 
    ![View Unlucky Numbers](images/view-unlucky-numbers.png)
@@ -105,7 +106,10 @@ This web application allows users to generate random lotto numbers while excludi
    ![View Generated Numbers](images/view-generated-numbers.png)
 
 ### Additional Information
-
+- **Number Limits**: Users are allowed to enter up to 6 unlucky numbers. If no new numbers are added, the application will generate lotto numbers using the ones already saved.
+- **Number Range**: The range of numbers you can enter is from 1 to 50, adhering to the common range of lotto numbers.
+- **Super Numbers**: Super numbers are generated independently and are not influenced by the unlucky numbers selected.
+- **Restrictions on Entries**: It is not allowed to add the number 0 or any special characters as unlucky numbers.
 - **No Authentication Required**: This application does not require any form of authentication, such as passwords or usernames, ensuring ease of access for all users.
 - **Visual Aids**: Throughout the application, visual cues and tooltips are provided to enhance your experience and guide you through the process of generating lotto numbers effectively.
 
