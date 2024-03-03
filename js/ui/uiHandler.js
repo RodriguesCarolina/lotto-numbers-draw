@@ -1,10 +1,11 @@
+import {LottoService} from "../services/lottoService.js";
+
+
 /**
  * Handles all UI interactions for the Lotto Numbers Generator application
  * @class
  * @param {LottoService} lottoService - Service used for managing the Lotto Numbers and API interactions.
  */
-
-import {LottoService} from "../services/lottoService.js";
 
 export class UiHandler {
     constructor(lottoService) {

@@ -65,6 +65,9 @@ export class LottoService {
      * @returns {Promise<void>}
      */
     async addNumbers(newNumbers) {
+        // Reload the excluded numbers from the server to ensure we have the latest list
+        await this.loadExcludedNumbers();
+
         const { validNumbers, errors } = this.validateNewNumbers(newNumbers);
 
         if (errors.length > 0) {
@@ -197,7 +200,6 @@ export class LottoService {
             if (result.success) {
                 //re-index to prevent wholes in array when removing the numbers:
                 this.excludedLottoNumbers = this.excludedLottoNumbers.filter(n => n !== numberToRemove);
-                this.excludedLottoNumbers = [...this.excludedLottoNumbers]; // This re-indexes the array
                 console.log('Number removed successfully:', numberToRemove);
             } else {
                 console.error('Failed to remove unlucky number:', result.error);
