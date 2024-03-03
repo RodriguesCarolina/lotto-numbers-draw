@@ -16,9 +16,6 @@ The motivation behind this project was to create a tool that can help Lotto enth
 
 - [Installation](#installation)
 - [Usage](#usage)
-- [Contributing](#contributing)
-- [Credits](#credits)
-- [License](#license)
 
 ## Installation
 
