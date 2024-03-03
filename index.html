@@ -11,7 +11,8 @@
 
 <div class="container py-5">
     <h1 class="mb-4">Lotto Numbers Generator</h1>
-    <div class="mb-3">
+    <!-- Lotto Type Selector -->
+    <div class="text-center mb-3">
         <div class="btn-group" role="group" aria-label="Lotto Type">
             <input type="radio" class="btn-check" name="lottoType" id="lotto6aus49" value="Lotto6aus49" autocomplete="off" checked>
             <label class="btn btn-outline-primary" for="lotto6aus49">LOTTO 6aus49</label>
@@ -21,27 +22,41 @@
         </div>
     </div>
 
+    <!-- Input for Unlucky Numbers -->
     <div class="input-group mb-3">
         <input type="text" class="form-control" id="numberInput" placeholder="Enter numbers separated by commas" aria-label="Unlucky numbers" aria-describedby="submitButton">
         <button class="btn btn-success" type="button" id="submitButton">Submit Unlucky Numbers</button>
     </div>
 
+    <!-- Alerts for Feedback -->
     <div id="alertPlaceholder"></div>
 
-    <div id="excludedNumbersDisplay" class="my-3"></div>
-    <div id="unluckyNumbersCounter" class="mb-3"></div>
+    <!-- Display for Excluded Unlucky Numbers -->
+    <div class="mb-3">
+        <h2 class="h5 text-center">Excluded Unlucky Numbers</h2>
+        <div id="excludedNumbersDisplay" class="d-flex justify-content-center flex-wrap"></div>
+        <p id="unluckyNumbersCounter" class="text-center"></p>
+    </div>
 
+    <!-- Button to Generate Numbers -->
     <div class="mb-3">
         <button id="generateNumbers" class="btn btn-primary">Generate Numbers</button>
     </div>
 
-    <div id="generatedNumbersDisplay" class="d-flex flex-wrap justify-content-center gap-2 p-4 border rounded">
-        <!-- Dynamically add number circles here -->
+    <!-- Display for Generated Lotto Numbers -->
+    <div class="mb-3">
+        <h2 class="h5 text-center">Generated Lotto Numbers</h2>
+        <div id="generatedNumbersDisplay" class="d-flex flex-wrap justify-content-center gap-2 p-4 border rounded">
+            <!-- Dynamically add number circles here -->
+        </div>
     </div>
 
-    <!-- Container for Eurojackpot super numbers if applicable -->
-    <div id="superNumbersDisplay" class="d-flex flex-wrap justify-content-center gap-2 p-4 border rounded mt-3">
-        <!-- Dynamically add super number circles here -->
+    <!-- Display for Eurojackpot Super Numbers -->
+    <div class="mb-3">
+        <h2 class="h5 text-center">Eurojackpot Super Numbers</h2>
+        <div id="superNumbersDisplay" class="d-flex flex-wrap justify-content-center gap-2 p-4 border rounded">
+            <!-- Dynamically add super number circles here -->
+        </div>
     </div>
 </div>
 

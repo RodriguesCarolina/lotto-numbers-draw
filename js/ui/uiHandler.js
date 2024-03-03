@@ -80,25 +80,27 @@ export class UiHandler {
     async updateUnluckyNumbersDisplay() {
         const unluckyNumbersList = document.getElementById('excludedNumbersDisplay');
         unluckyNumbersList.innerHTML = ''; // Clear existing content
+        unluckyNumbersList.className = 'd-flex align-items-center justify-content-center flex-wrap';
 
         const excludedNumbers = this.lottoService.getExcludedLottoNumbers();
 
         // Iterate over each number and create a circle and button for it
         excludedNumbers.forEach(n => {
+            const numberContainer = document.createElement('div');
+            numberContainer.className = 'number-container d-flex align-items-center';
+
             const numberCircle = document.createElement('div');
             numberCircle.className = 'number-circle';
             numberCircle.textContent = n;
 
             const removeButton = document.createElement('button');
+            removeButton.className = 'remove-number-btn btn btn-danger';
             removeButton.textContent = 'X';
-            removeButton.className = 'remove-number-btn';
             removeButton.onclick = () => this.removeNumber(n);
+            removeButton.title = 'Remove this number';
 
-            const numberContainer = document.createElement('div');
-            numberContainer.className = 'number-container';
             numberContainer.appendChild(numberCircle);
             numberContainer.appendChild(removeButton);
-
             unluckyNumbersList.appendChild(numberContainer);
         });
 
