@@ -1,21 +1,44 @@
 import {LottoService} from "../services/lottoService.js";
 
+
+/**
+ * Handles all UI interactions for the Lotto Numbers Generator application
+ * @class
+ * @param {LottoService} lottoService - Service used for managing the Lotto Numbers and API interactions.
+ */
+
 export class UiHandler {
     constructor(lottoService) {
+        /**
+         * @type {lottoService}
+         * @private
+         */
         this.lottoService = lottoService;
     }
 
+    /**
+     * Initializes the UI handler by setting the service and attaching event listeners.
+     * @returns {Promise<void>}
+     */
     async init() {
         await this.lottoService.initializeService();
         await this.updateUnluckyNumbersDisplay();
         this.attachEventListeners();
     }
 
+    /**
+     * Attaches click event listeners to UI elements for generating and submitting numbers.
+     */
     attachEventListeners() {
         document.getElementById('generateNumbers').addEventListener('click', () => this.generateAndDisplayLottoNumbers());
         document.getElementById('submitButton').addEventListener('click', () => this.submitUnluckyNumbers());
     }
 
+    /**
+     * Submits the unlucky numbers entered by the users and then updates the UI accordingly.
+     * @async
+     * @returns {Promise<void>}
+     */
     async submitUnluckyNumbers() {
         const input = document.getElementById('numberInput');
         const numbers = input.value.split(',')
@@ -34,7 +57,11 @@ export class UiHandler {
         }
     }
 
-
+    /**
+     * Generates and displays lotto numbers based on the lotto type.
+     * @async
+     * @returns {Promise<void>}
+     */
 
     async generateAndDisplayLottoNumbers() {
         const lottoType = document.querySelector('[name="lottoType"]:checked').value;
@@ -76,7 +103,11 @@ export class UiHandler {
         }
     }
 
-
+    /**
+     * Updates the display of unlucky numbers on the UI.
+     * @async
+     * @returns {Promise<void>}
+     */
     async updateUnluckyNumbersDisplay() {
         const unluckyNumbersList = document.getElementById('excludedNumbersDisplay');
         unluckyNumbersList.innerHTML = ''; // Clear existing content
@@ -106,10 +137,14 @@ export class UiHandler {
 
         // Update the counter display
         const counterDisplay = document.getElementById('unluckyNumbersCounter');
-        counterDisplay.textContent = `${excludedNumbers.length}/6 Unlucky Numbers Set`;
+        counterDisplay.textContent = `${excludedNumbers.length}/6 Unlucky Numbers Saved`;
     }
 
-
+    /**
+     * Display an alert message on the UI in case the input is not correct.
+     * @param {string} message - The message to display in the alert
+     * @param {string} type - The type of alert will influence the styling on bootstrap. ('success' is green, 'danger' is red).
+     */
     showAlert(message, type) {
         console.log(`Showing alert: ${message}, type: ${type}`); // Debugging line
         const alertPlaceholder = document.getElementById('alertPlaceholder');
@@ -124,7 +159,12 @@ export class UiHandler {
         }, 5000);
     }
 
-
+    /**
+     * Removes a specific  unlucky number and updates the UI.
+     * @param  {number} numberToRemove
+     * @async
+     * @returns {Promise<void>}
+     */
     async removeNumber(numberToRemove) {
         try {
             await this.lottoService.removeNumber(numberToRemove);

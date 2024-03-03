@@ -1,17 +1,31 @@
-// /js/services/apiService.js
+import {API_URLS} from '../config.js';
 
-import { API_URLS } from '../config.js';
-
-// Helper function for handling fetch responses
+/**
+ * Handles the responses from fetch requests.
+ * @param {Response}  response - The Response object from a fetch call.
+ * @returns {Promise<any>} The JSON data from the response.
+ * @throws {Error} Shows errors when the response status is not ok (200).
+ */
 async function handleResponse(response) {
     if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
     }
-    const data = await response.json();
-    return data;
+    return await response.json();
 }
-
-// Fetches excluded lotto numbers with error handling
+export async function getUnluckyNumbers() {
+    try {
+        const response = await fetch(API_URLS.getUnluckyNumbers);
+        return await handleResponse(response);
+    } catch (error) {
+        console.error('Error fetching unlucky numbers:', error);
+        throw error;
+    }
+}
+/**
+ * Fetches excluded lotto numbers from server and handles errors.
+ * @returns {Promise<number[]>} Returns array of excluded lotto numbers.
+ * @throws {Error} Shows Error if the fetch fails or if the data has wrong format.
+ */
 export async function fetchExcludedLottoNumbers() {
     try {
         const response = await fetch(API_URLS.fetchExcludedLottoNumbers);
@@ -26,16 +40,12 @@ export async function fetchExcludedLottoNumbers() {
     }
 }
 
-export async function getUnluckyNumbers() {
-    try {
-        const response = await fetch(API_URLS.getUnluckyNumbers);
-        return await handleResponse(response);
-    } catch (error) {
-        console.error('Error fetching unlucky numbers:', error);
-        throw error;
-    }
-}
-
+/**
+ * Saves the unlucky numbers to the server in a JSON file.
+ * @param {number[]} numbers - Array of numbers to be saved as unlucky numbers.
+ * @returns {Promise<object>} - The response object from the server.
+ * @throws Shows error if the numbers could not be saved
+ */
 export async function saveUnluckyNumbers(numbers) {
     try {
         const response = await fetch(API_URLS.saveUnluckyNumbers, {
@@ -50,6 +60,11 @@ export async function saveUnluckyNumbers(numbers) {
     }
 }
 
+/**
+ * Fetches the constants for Lotto Type saved in JSON.
+ * @returns {Promise<object>} The constants object-
+ * @throws Shows error in case the fetch fails.
+ */
 export async function fetchConstants() {
     try {
         const response = await fetch(API_URLS.fetchConstants);
@@ -60,6 +75,12 @@ export async function fetchConstants() {
     }
 }
 
+/**
+ * Removes unlucky number from the server when clicked on the UI.
+ * @param {number} numberToRemove - The number to be removed.
+ * @returns {Promise<object>} The response object from the server.
+ * @throws {Error} When removal fails.
+ */
 export async function removeUnluckyNumber(numberToRemove) {
     try {
         const response = await fetch(API_URLS.removeUnluckyNumber, {

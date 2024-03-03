@@ -7,8 +7,9 @@
     width: 40px;
     height: 40px;
     border-radius: 50%;
-    background-color: #28a745;
-    color: white;
+    border-color: #c28312;
+    background-color: #FFBB00;
+    color: #1A3365;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -31,7 +32,53 @@
 
 .remove-number-btn:hover {
     opacity: 0.8;
-    background-color: #dc3545;
+    background-color: #FF4343;
 }
 
+.lotto-container {
+    max-width: 600px;
+    margin: auto;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background: #FFFF;
+    border-radius: 10px;
+}
+h1 {
+    color: #1A3365;
+}
+#generateNumbers {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #1A3365;
+}
+
+.btn-soft-yellow, .alert-soft-yellow {
+    background-color: #ffecb3;
+    border-color: #FFBB00;
+}
+
+.btn-soft-yellow:hover, .alert-soft-yellow:hover {
+    background-color: #ffe082;
+}
+
+.btn-soft-yellow {
+    color: #1A3365;
+}
+
+.custom-btn-outline-primary {
+    color: #1A3365;
+    border-color: #FFBB00;
+}
+
+.custom-btn-outline-primary:hover {
+    color: #fff;
+    background-color: #1A3365;
+    border-color: #06255b;
+}
+
+.btn-group>.btn-check:checked+.btn {
+    color: #fff;
+    background-color: #1A3365;
+    border-color: #06255b;
+}
 
