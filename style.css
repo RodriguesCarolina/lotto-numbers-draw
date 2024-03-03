@@ -34,4 +34,16 @@
     background-color: #dc3545;
 }
 
+.lotto-container {
+    max-width: 600px;
+    margin: auto;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background: white;
+    border-radius: 10px;
+}
 
+#generateNumbers {
+    padding: 10px 20px;
+    font-size: 16px;
+}

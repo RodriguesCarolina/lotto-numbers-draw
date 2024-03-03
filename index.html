@@ -10,52 +10,60 @@
 <script type="module" src="js/app.js"></script>
 
 <div class="container py-5">
-    <h1 class="mb-4 text-center">Lotto Numbers Generator</h1>
-    <!-- Lotto Type Selector -->
-    <div class="text-center mb-3">
-        <div class="btn-group" role="group" aria-label="Lotto Type">
-            <input type="radio" class="btn-check" name="lottoType" id="lotto6aus49" value="Lotto6aus49" autocomplete="off" checked>
-            <label class="btn btn-outline-primary" for="lotto6aus49">LOTTO 6aus49</label>
+    <div class="lotto-container py-5">
+        <h1 class="mb-4 display-4 text-center text-primary mb-4">Lotto Numbers Generator</h1>
 
-            <input type="radio" class="btn-check" name="lottoType" id="eurojackpot" value="EuroJackpot" autocomplete="off">
-            <label class="btn btn-outline-primary" for="eurojackpot">Eurojackpot</label>
+        <!-- Lotto Type Selector -->
+        <div class="row justify-content-center mb-3">
+            <div class="col-md-6 text-center">
+                <div class="btn-group" role="group" aria-label="Lotto Type">
+                    <input type="radio" class="btn-check" name="lottoType" id="lotto6aus49" value="Lotto6aus49" autocomplete="off" checked>
+                    <label class="btn btn-outline-primary" for="lotto6aus49">LOTTO 6aus49</label>
+
+                    <input type="radio" class="btn-check" name="lottoType" id="eurojackpot" value="EuroJackpot" autocomplete="off">
+                    <label class="btn btn-outline-primary" for="eurojackpot">Eurojackpot</label>
+                </div>
+            </div>
         </div>
-    </div>
 
-    <!-- Input for Unlucky Numbers -->
-    <div class="input-group mb-3">
-        <input type="text" class="form-control" id="numberInput" placeholder="Enter numbers separated by commas" aria-label="Unlucky numbers" aria-describedby="submitButton">
-        <button class="btn btn-success" type="button" id="submitButton">Submit Unlucky Numbers</button>
-    </div>
-
-    <!-- Alerts for Feedback -->
-    <div id="alertPlaceholder"></div>
-
-    <!-- Display for Excluded Unlucky Numbers -->
-    <div class="mb-3">
-        <h2 class="h5 text-center">Excluded Unlucky Numbers</h2>
-        <div id="excludedNumbersDisplay" class="d-flex justify-content-center flex-wrap"></div>
-        <p id="unluckyNumbersCounter" class="text-center"></p>
-    </div>
-
-    <!-- Button to Generate Numbers -->
-    <div class="mb-3">
-        <button id="generateNumbers" class="btn btn-primary">Generate Numbers</button>
-    </div>
-
-    <!-- Display for Generated Lotto Numbers -->
-    <div class="mb-3">
-        <h2 class="h5 text-center">Generated Lotto Numbers</h2>
-        <div id="generatedNumbersDisplay" class="d-flex flex-wrap justify-content-center gap-2 p-4 border rounded">
-            <!-- Dynamically add number circles here -->
+        <!-- Input for Unlucky Numbers -->
+        <div class="row justify-content-center mb-3">
+            <div class="col-9">
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control" id="numberInput" placeholder="Enter numbers" aria-label="Unlucky numbers" aria-describedby="submitButton">
+                    <button class="btn btn-success" type="button" id="submitButton">Submit Unlucky Numbers</button>
+                </div>
+            </div>
         </div>
-    </div>
 
-    <!-- Display for Eurojackpot Super Numbers -->
-    <div class="mb-3">
-        <h2 class="h5 text-center">Eurojackpot Super Numbers</h2>
-        <div id="superNumbersDisplay" class="d-flex flex-wrap justify-content-center gap-2 p-4 border rounded">
-            <!-- Dynamically add super number circles here -->
+        <!-- Alerts for Feedback -->
+        <div id="alertPlaceholder"></div>
+
+        <!-- Display for Excluded Unlucky Numbers -->
+        <div class="mb-3">
+            <h2 class="h5 text-center">Excluded Unlucky Numbers</h2>
+            <div id="excludedNumbersDisplay" class="d-flex justify-content-center flex-wrap"></div>
+            <p id="unluckyNumbersCounter" class="text-center"></p>
+        </div>
+
+        <div class="w-100 d-flex justify-content-center mb-3">
+            <button id="generateNumbers" class="btn btn-primary">Generate Numbers</button>
+        </div>
+
+        <!-- Display for Generated Lotto Numbers -->
+        <div class="mb-3">
+            <h2 class="h5 text-center">Generated Lotto Numbers</h2>
+            <div id="generatedNumbersDisplay" class="d-flex flex-wrap justify-content-center gap-2 p-4 border rounded">
+                <!-- Dynamically add number circles here -->
+            </div>
+        </div>
+
+        <!-- Display for Eurojackpot Super Numbers -->
+        <div class="mb-3">
+            <h2 class="h5 text-center">Eurojackpot Super Numbers</h2>
+            <div id="superNumbersDisplay" class="d-flex flex-wrap justify-content-center gap-2 p-4 border rounded">
+                <!-- Dynamically add super number circles here -->
+            </div>
         </div>
     </div>
 </div>
